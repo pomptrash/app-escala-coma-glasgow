@@ -15,7 +15,12 @@ export function StackRouter() {
       <StackNavigator.Screen
         component={GlasgowForm}
         name="GlasgowForm"
-        options={{ headerShown: true, headerTitle: "Calcular Escala Glasgow" }}
+        options={{
+          headerShown: true,
+          headerTitle: "Calcular Escala De Glasgow",
+          headerTitleAlign: "center",
+          headerStyle: { backgroundColor: "lightblue" },
+        }}
       />
     </StackNavigator.Navigator>
   );
