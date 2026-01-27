@@ -26,6 +26,10 @@ export function StackRouter() {
       <StackNavigator.Screen
         name="GlasgowFormResult"
         component={GlasgowFormResult}
+        options={{
+          headerTitle: "",
+          headerTitleAlign: "center",
+        }}
       />
     </StackNavigator.Navigator>
   );
