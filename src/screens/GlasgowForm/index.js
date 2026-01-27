@@ -8,8 +8,12 @@ import {
   Platform,
 } from "react-native";
 import { RadioButton, Button } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 export function GlasgowForm() {
+  const navigation = useNavigation();
+
+  // hook do react hook form
   const {
     control,
     handleSubmit,
@@ -23,7 +27,28 @@ export function GlasgowForm() {
     },
   });
 
-  const onSubmit = () => console.log("submit");
+  // função para calcular o resultado da escala de glasgow
+  const calculateGlasgow = (data) => {
+    const {
+      aberturaOcular,
+      respostaMotora,
+      respostaVerbal,
+      reatividadePupilar,
+    } = data; // parâmetro data que será passado pelo onSubmit
+
+    // fazendo o cálculo.
+    // utilizando o operador unário (+) para a conversão dos valores de string para number
+    const resultado =
+      +aberturaOcular + +respostaMotora + +respostaVerbal + +reatividadePupilar;
+
+    return resultado;
+  };
+
+  const onSubmit = (data) => {
+    const resultado = calculateGlasgow(data);
+    navigation.navigate("GlasgowFormResult", { resultado: resultado });
+    console.log(resultado);
+  };
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -123,7 +148,11 @@ export function GlasgowForm() {
                   label="Sons incompreensíveis (emite sons, mas não palavras) (2)"
                   value="2"
                 />
-                <RadioButton.Item label="Sem resposta verbal (1)" value="1" />
+                <RadioButton.Item
+                  labelStyle={styles.radioItem}
+                  label="Sem resposta verbal (1)"
+                  value="1"
+                />
               </RadioButton.Group>
             </View>
           )}

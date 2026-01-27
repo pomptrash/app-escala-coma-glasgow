@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { GlasgowForm } from "../screens/GlasgowForm";
 import Home from "../screens/Home";
+import { GlasgowFormResult } from "../screens/GlasgowFormResult";
 
 const StackNavigator = createNativeStackNavigator();
 
@@ -21,6 +22,10 @@ export function StackRouter() {
           headerTitleAlign: "center",
           headerStyle: { backgroundColor: "lightblue" },
         }}
+      />
+      <StackNavigator.Screen
+        name="GlasgowFormResult"
+        component={GlasgowFormResult}
       />
     </StackNavigator.Navigator>
   );
