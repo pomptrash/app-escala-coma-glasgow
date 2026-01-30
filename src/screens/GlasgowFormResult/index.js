@@ -17,6 +17,8 @@ import {
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
+import { postData } from "../../storage/patientStorage";
+
 export function GlasgowFormResult() {
   // modal
   const [modalVisible, setModalVisible] = useState(false);
@@ -26,7 +28,7 @@ export function GlasgowFormResult() {
   // navigation params
   const navigation = useNavigation();
   const route = useRoute();
-  const { resultado } = route.params;
+  const { resultado, indicadores } = route.params;
 
   // react hook form
   const {
@@ -47,8 +49,23 @@ export function GlasgowFormResult() {
     );
   }
 
-  const onSubmit = (data) => {
-    console.log(data);
+  // função para persistir os dados inseridos pelo usuário
+  const onSubmit = async (data) => {
+    try {
+      const patientData = {
+        ...data,
+        indicadores,
+        resultado,
+      };
+      console.log(patientData);
+      await postData(patientData);
+
+      hideModal();
+      navigation.navigate("Home");
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao salvar");
+    }
   };
   return (
     <ScrollView

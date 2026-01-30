@@ -44,10 +44,10 @@ export function GlasgowForm() {
     return resultado;
   };
 
+  // função para navegar até a tela de resultado
   const onSubmit = (data) => {
     const resultado = calculateGlasgow(data);
-    navigation.navigate("GlasgowFormResult", { resultado: resultado });
-    console.log(resultado);
+    navigation.navigate("GlasgowFormResult", { resultado, indicadores: data });
   };
   return (
     <KeyboardAvoidingView
