@@ -1,27 +1,13 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 import { Router } from "./src/routes";
-import { PaperProvider, Button } from "react-native-paper";
+import { PaperProvider } from "react-native-paper";
+import { PatientProvider } from "./src/contexts/patientContext";
 
 export default function App() {
   return (
-    <PaperProvider>
-      <Router>
-        <View style={styles.container}>
-          <Button>
-            <Text>Adicionar</Text>
-          </Button>
-        </View>
-      </Router>
-    </PaperProvider>
+    <PatientProvider>
+      <PaperProvider>
+        <Router/>
+      </PaperProvider>
+    </PatientProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

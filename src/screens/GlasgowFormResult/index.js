@@ -17,9 +17,14 @@ import {
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { postData } from "../../storage/patientStorage";
+// contexto dos pacientes salvos
+import { useContext } from "react";
+import { PatientContext } from "../../contexts/patientContext";
 
 export function GlasgowFormResult() {
+  // consumo do contexto de pacientes
+  const { addPatient } = useContext(PatientContext);
+
   // modal
   const [modalVisible, setModalVisible] = useState(false);
   const showModal = () => setModalVisible(true);
@@ -56,9 +61,11 @@ export function GlasgowFormResult() {
         ...data,
         indicadores,
         resultado,
+        id: String(new Date().getTime()),
+        createdAt: String(new Date().toLocaleString("pt-BR")),
       };
       console.log(patientData);
-      await postData(patientData);
+      await addPatient(patientData);
 
       hideModal();
       navigation.navigate("Home");
