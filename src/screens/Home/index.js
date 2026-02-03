@@ -1,4 +1,4 @@
-import { StyleSheet, Text, FlatList } from "react-native";
+import { StyleSheet, Text, FlatList, Alert} from "react-native";
 import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,7 +13,7 @@ export default function Home() {
   const navigation = useNavigation();
 
   // consumo do contexto
-  const { patients, loading } = useContext(PatientContext);
+  const { patients, loading, deletePatient } = useContext(PatientContext);
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Lista de Pacientes ({patients.length})</Text>
@@ -28,6 +28,24 @@ export default function Home() {
             patientAge={item.patientAge}
             createdAt={item.createdAt}
             result={item.resultado}
+            deletePatient={() =>
+              Alert.alert(
+                "Confirmação", // título
+                "Tem certeza que deseja excluir o paciente?", // mensagem 
+                [
+                  {
+                    text: "Cancelar",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel", // estilo 'cancel' (iOS)
+                  },
+                  {
+                    text: "Excluir",
+                    onPress: () => {deletePatient(item.id), console.log(`paciente ${item.patientName} deletado`)},
+                    style: "destructive", // estilo 'destructive' (iOS)
+                  },
+                ]
+              )
+            }
           />
         )}
       />

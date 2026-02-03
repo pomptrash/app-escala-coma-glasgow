@@ -5,7 +5,11 @@ import {
   useMemo,
   useEffect,
 } from "react";
-import { getData, postData } from "../storage/patientStorage";
+import {
+  getData,
+  postData,
+  deletePatientById,
+} from "../storage/patientStorage";
 
 export const PatientContext = createContext(); // criação do contexto
 
@@ -40,6 +44,17 @@ export function PatientProvider({ children }) {
     [fetchPatients],
   );
 
+  // função para deletar um paciente por id
+  const deletePatient = async (id) => {
+    try {
+      const updatedPatientList = await deletePatientById(id);
+      console.log(updatedPatientList)
+      setPatients(updatedPatientList);
+    } catch (err) {
+      console.log("Erro ao deletar o paciente.", err);
+    }
+  };
+
   useEffect(() => {
     fetchPatients();
   }, [fetchPatients]);
@@ -49,9 +64,10 @@ export function PatientProvider({ children }) {
       patients,
       loading,
       addPatient,
+      deletePatient,
       refreshList: fetchPatients,
     }),
-    [patients, loading, addPatient, fetchPatients],
+    [patients, loading, addPatient, fetchPatients, deletePatient],
   );
   return (
     <PatientContext.Provider value={contextValue}>

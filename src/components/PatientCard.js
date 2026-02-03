@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity, StyleSheet, View } from "react-native";
 import { IconButton } from "react-native-paper";
 
-export function PatientCard({ patientName, patientAge, createdAt, result }) {
+export function PatientCard({ patientName, patientAge, createdAt, result, deletePatient }) {
   // objeto de exemplo
   //   {
   //   "createdAt": "01/02/2026, 22:54:42",
@@ -33,7 +33,7 @@ export function PatientCard({ patientName, patientAge, createdAt, result }) {
         <Text style={styles.subText}>Adicionado em: {createdAt}</Text>
         <Text style={styles.infoText}>Clique para ver mais detalhes</Text>
       </TouchableOpacity>
-      <IconButton icon={"trash-can-outline"} size={24} />
+      <IconButton icon={"trash-can-outline"} size={24} onPress={deletePatient}/>
     </View>
   );
 }
