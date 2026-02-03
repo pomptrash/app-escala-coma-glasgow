@@ -18,7 +18,8 @@ export const getData = async () => {
 export const postData = async (patientData) => {
   try {
     const id = String(new Date().getTime());
-    const newPatient = { id, ...patientData }; // objeto do novo paciente
+    const createdAt = String(new Date().toLocaleString("pt-BR"));
+    const newPatient = { id, createdAt, ...patientData }; // objeto do novo paciente
 
     // estado atual do array
     const currentData = await getData();
@@ -30,6 +31,26 @@ export const postData = async (patientData) => {
     await AsyncStorage.setItem(PATIENT_COLLECTION, JSON.stringify(updatedData));
   } catch (err) {
     console.log(err);
+    throw err;
+  }
+};
+
+// função para deletar um paciente por ID
+export const deletePatientById = async (id) => {
+  try {
+    // estado atual dos dados salvos
+    const currentData = await getData();
+
+    // filtra e cria um novo array sem o paciente indicado pelo id
+    const filteredData = currentData.filter((patient) => patient.id !== id);
+
+    await AsyncStorage.setItem(
+      PATIENT_COLLECTION,
+      JSON.stringify(filteredData),
+    );
+
+    return filteredData;
+  } catch (err) {
     throw err;
   }
 };

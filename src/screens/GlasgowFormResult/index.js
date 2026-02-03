@@ -61,8 +61,6 @@ export function GlasgowFormResult() {
         ...data,
         indicadores,
         resultado,
-        id: String(new Date().getTime()),
-        createdAt: String(new Date().toLocaleString("pt-BR")),
       };
       console.log(patientData);
       await addPatient(patientData);
