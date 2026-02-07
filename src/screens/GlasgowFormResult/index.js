@@ -1,10 +1,9 @@
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { Button } from "react-native-paper";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useContext } from "react";
 
 // contexto dos pacientes salvos
-import { useContext } from "react";
 import { PatientContext } from "../../contexts/patientContext";
 
 import { PatientModal } from "../../components/PatientModal";
@@ -44,7 +43,6 @@ export function GlasgowFormResult() {
           indicadores,
           resultado,
         };
-        console.log(patientData);
         await addPatient(patientData);
 
         hideModal();

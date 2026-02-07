@@ -15,15 +15,27 @@ import {
   TextInput,
 } from "react-native-paper";
 import { Controller, useForm } from "react-hook-form";
-import { useCallback, memo } from "react";
+import { useCallback, memo, useEffect } from "react";
 
-export const  PatientModal = memo(function PatientModal({ modalVisible, hideModal, onSubmit }) {
+export const PatientModal = memo(function PatientModal({
+  modalVisible,
+  hideModal,
+  onSubmit,
+  editingPatient,
+}) {
   // react hook form
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: editingPatient });
+
+  useEffect(() => {
+    if (editingPatient) {
+      reset(editingPatient);
+    }
+  }, [editingPatient, reset]);
 
   const handleSave = useCallback(
     (data) => {
@@ -173,7 +185,7 @@ export const  PatientModal = memo(function PatientModal({ modalVisible, hideModa
       </Modal>
     </Portal>
   );
-})
+});
 
 const styles = StyleSheet.create({
   modal: {

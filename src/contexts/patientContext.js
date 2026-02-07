@@ -9,6 +9,7 @@ import {
   getData,
   postData,
   deletePatientById,
+  updatePatient,
 } from "../storage/patientStorage";
 
 export const PatientContext = createContext(); // criação do contexto
@@ -32,28 +33,40 @@ export function PatientProvider({ children }) {
   }, []);
 
   // função para salvar um novo paciente
-  const addPatient = useCallback(
-    async (newPatient) => {
-      try {
-        await postData(newPatient);
-        await fetchPatients();
-      } catch (err) {
-        throw err;
-      }
-    },
-    [fetchPatients],
-  );
+  const addPatient = useCallback(async (newPatient) => {
+    try {
+      const updatedData = await postData(newPatient);
+
+      setPatients(updatedData);
+    } catch (err) {
+      throw err;
+    }
+  }, []);
+
+  // função para editar um paciente
+  const updatePatientData = useCallback(async (id, data) => {
+    try {
+      const updatedData = await updatePatient(id, data);
+
+      setPatients(updatedData);
+
+      return true;
+    } catch (err) {
+      console.error(err);
+
+      return false;
+    }
+  }, []);
 
   // função para deletar um paciente por id
-  const deletePatient = async (id) => {
+  const deletePatient = useCallback(async (id) => {
     try {
       const updatedPatientList = await deletePatientById(id);
-      console.log(updatedPatientList)
       setPatients(updatedPatientList);
     } catch (err) {
       console.log("Erro ao deletar o paciente.", err);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchPatients();
@@ -65,9 +78,17 @@ export function PatientProvider({ children }) {
       loading,
       addPatient,
       deletePatient,
+      updatePatientData,
       refreshList: fetchPatients,
     }),
-    [patients, loading, addPatient, fetchPatients, deletePatient],
+    [
+      patients,
+      loading,
+      addPatient,
+      fetchPatients,
+      deletePatient,
+      updatePatientData,
+    ],
   );
   return (
     <PatientContext.Provider value={contextValue}>

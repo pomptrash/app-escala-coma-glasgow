@@ -38,7 +38,6 @@ export default function Home() {
                 [
                   {
                     text: "Cancelar",
-                    onPress: () => console.log("Cancel Pressed"),
                     style: "cancel", // estilo 'cancel' (iOS)
                   },
                   {

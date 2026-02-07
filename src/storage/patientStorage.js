@@ -29,8 +29,30 @@ export const postData = async (patientData) => {
 
     // guarda o array atualizado
     await AsyncStorage.setItem(PATIENT_COLLECTION, JSON.stringify(updatedData));
+    return updatedData
   } catch (err) {
     console.log(err);
+    throw err;
+  }
+};
+
+// função para editar os dados de um paciente
+export const updatePatient = async (id, newPatientData) => {
+  try {
+    const currentData = await getData();
+
+    const updatedData = currentData.map((patient) => {
+      if (patient.id === id) {
+        return { ...patient, ...newPatientData };
+      }
+
+      return patient;
+    });
+
+    await AsyncStorage.setItem(PATIENT_COLLECTION, JSON.stringify(updatedData));
+    return updatedData;
+  } catch (err) {
+    console.error(err);
     throw err;
   }
 };

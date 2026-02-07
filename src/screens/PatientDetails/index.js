@@ -2,42 +2,77 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { resultColor } from "../../components/PatientCard";
 import { FAB } from "react-native-paper";
+import { useState, useCallback, useContext } from "react";
+import { PatientModal } from "../../components/PatientModal";
+
+import { PatientContext } from "../../contexts/patientContext";
 
 export function PatientDetails() {
   const route = useRoute();
   const { patient } = route.params;
+
+  const { updatePatientData, patients } = useContext(PatientContext);
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const showModal = useCallback(() => setModalVisible(true), []);
+  const hideModal = useCallback(() => setModalVisible(false), []);
+
+  const currentPatient = patients.find((p) => p.id === patient.id) || patient;
+
+  const handleUpdate = useCallback(
+    async (data) => {
+      const newData = await updatePatientData(patient.id, data);
+
+      if (newData) {
+        hideModal();
+      }
+    },
+    [currentPatient.id, updatePatientData, hideModal],
+  );
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <PatientModal
+        modalVisible={modalVisible}
+        hideModal={hideModal}
+        onSubmit={handleUpdate}
+        editingPatient={currentPatient}
+      />
+
       <Text style={styles.text}>Informações</Text>
-      
+
       <View style={styles.patientInfoContainer}>
         <Text style={styles.text}>
-          Nome: <Text style={styles.patientName}>{patient.patientName}</Text>
+          Nome:{" "}
+          <Text style={styles.patientName}>{currentPatient.patientName}</Text>
         </Text>
       </View>
       <View style={styles.patientInfoContainer}>
-        <Text style={styles.text}>Idade: {patient.patientAge} anos</Text>
+        <Text style={styles.text}>Idade: {currentPatient.patientAge} anos</Text>
       </View>
 
       <Text style={styles.text}>Quadro Clínico</Text>
       <View style={styles.patientInfoContainer}>
         <Text
-          style={[styles.report, { color: resultColor(patient.resultado) }]}
+          style={[
+            styles.report,
+            { color: resultColor(currentPatient.resultado) },
+          ]}
         >
-          Glasgow: {patient.resultado}
+          Glasgow: {currentPatient.resultado}
         </Text>
         <View style={styles.subContent}>
           <Text style={styles.text}>
-            Abertura Ocular: {patient.indicadores.aberturaOcular}
+            Abertura Ocular: {currentPatient.indicadores.aberturaOcular}
           </Text>
           <Text style={styles.text}>
-            Resposta Verbal: {patient.indicadores.respostaVerbal}
+            Resposta Verbal: {currentPatient.indicadores.respostaVerbal}
           </Text>
           <Text style={styles.text}>
-            Resposta Motora: {patient.indicadores.respostaMotora}
+            Resposta Motora: {currentPatient.indicadores.respostaMotora}
           </Text>
           <Text style={styles.text}>
-            Reatividade Pupilar: {patient.indicadores.reatividadePupilar}
+            Reatividade Pupilar: {currentPatient.indicadores.reatividadePupilar}
           </Text>
         </View>
 
@@ -50,16 +85,21 @@ export function PatientDetails() {
                 { padding: 16, borderRadius: 8, backgroundColor: "#f3f4f5" },
               ]}
             >
-              {patient.patientReport}
+              {currentPatient.patientReport}
             </Text>
           </View>
         </View>
       </View>
 
       <Text style={[styles.text, { fontWeight: "400", marginTop: 16 }]}>
-        Adicionado em {patient.createdAt}
+        Adicionado em {currentPatient.createdAt}
       </Text>
-      <FAB style={styles.fab} icon={"pencil"} label="Editar" onPress={() => {}} />
+      <FAB
+        style={styles.fab}
+        icon={"pencil"}
+        label="Editar"
+        onPress={showModal}
+      />
     </ScrollView>
   );
 }
@@ -80,6 +120,7 @@ const styles = StyleSheet.create({
 
   patientName: {
     fontSize: 24,
+    textTransform: "capitalize"
   },
   report: {
     fontSize: 16,
