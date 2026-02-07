@@ -1,5 +1,5 @@
 import { StyleSheet, Text, FlatList, Alert } from "react-native";
-import { Button } from "react-native-paper";
+import { FAB } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -56,14 +56,14 @@ export default function Home() {
         )}
       />
 
-      <Button
-        style={styles.buttonView}
-        textColor="#000"
-        labelStyle={{ fontWeight: "bold", fontSize: 16 }}
+      <FAB
+        style={styles.fab}
+        icon={"plus"}
+        label="Adicionar"
         onPress={() => navigation.navigate("GlasgowForm")}
       >
         <Text>Adicionar</Text>
-      </Button>
+      </FAB>
     </SafeAreaView>
   );
 }
@@ -81,9 +81,12 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
 
-  buttonView: {
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: "#000",
+  fab: {
+    position: "absolute",
+    bottom: 24,
+    right: 24,
+    marginBottom: 16,
+    backgroundColor: "lightblue",
+    fontSize: 24,
   },
 });
