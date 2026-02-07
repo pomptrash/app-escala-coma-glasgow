@@ -1,4 +1,4 @@
-import { StyleSheet, Text, FlatList, Alert} from "react-native";
+import { StyleSheet, Text, FlatList, Alert } from "react-native";
 import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -28,10 +28,13 @@ export default function Home() {
             patientAge={item.patientAge}
             createdAt={item.createdAt}
             result={item.resultado}
+            navigate={() =>
+              navigation.navigate("PatientDetails", { patient: item })
+            }
             deletePatient={() =>
               Alert.alert(
                 "Confirmação", // título
-                "Tem certeza que deseja excluir o paciente?", // mensagem 
+                "Tem certeza que deseja excluir o paciente?", // mensagem
                 [
                   {
                     text: "Cancelar",
@@ -40,10 +43,13 @@ export default function Home() {
                   },
                   {
                     text: "Excluir",
-                    onPress: () => {deletePatient(item.id), console.log(`paciente ${item.patientName} deletado`)},
+                    onPress: () => {
+                      (deletePatient(item.id),
+                        console.log(`paciente ${item.patientName} deletado`));
+                    },
                     style: "destructive", // estilo 'destructive' (iOS)
                   },
-                ]
+                ],
               )
             }
           />

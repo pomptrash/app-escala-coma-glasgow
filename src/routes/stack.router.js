@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { GlasgowForm } from "../screens/GlasgowForm";
 import Home from "../screens/Home";
 import { GlasgowFormResult } from "../screens/GlasgowFormResult";
+import { PatientDetails } from "../screens/PatientDetails";
 
 const StackNavigator = createNativeStackNavigator();
 
@@ -29,6 +30,13 @@ export function StackRouter() {
         options={{
           headerTitle: "",
           headerTitleAlign: "center",
+        }}
+      />
+      <StackNavigator.Screen
+        name="PatientDetails"
+        component={PatientDetails}
+        options={{
+          headerTitle: "Detalhes do paciente",
         }}
       />
     </StackNavigator.Navigator>
