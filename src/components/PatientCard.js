@@ -1,7 +1,14 @@
 import { Text, TouchableOpacity, StyleSheet, View } from "react-native";
 import { IconButton } from "react-native-paper";
 
-export function PatientCard({ patientName, patientAge, createdAt, result, deletePatient, navigate }) {
+export function PatientCard({
+  patientName,
+  patientAge,
+  createdAt,
+  result,
+  deletePatient,
+  navigate,
+}) {
   // objeto de exemplo
   //   {
   //   "createdAt": "01/02/2026, 22:54:42",
@@ -12,28 +19,25 @@ export function PatientCard({ patientName, patientAge, createdAt, result, delete
   //   "patientReport": "exemplo",
   //   "resultado": 6
   // }
-  const resultColor = () => {
-    if (result >= 15) return "#4CAF50";
-    if (result >= 13 && result <= 14) return "#4CAF50";
-    if (result >= 9 && result <= 12) return "#FFC107";
-    if (result >= 3 && result <= 8) return "#FF9800";
-    if (result < 3) return "#D32F2F";
-  };
 
   return (
-    <View style={[styles.container, { borderLeftColor: resultColor() }]}>
+    <View style={[styles.container, { borderLeftColor: resultColor(result) }]}>
       <TouchableOpacity style={styles.content} onPress={navigate}>
         <Text style={styles.text} numberOfLines={2}>
           {patientName}
         </Text>
         <Text style={styles.subText}>{patientAge} anos</Text>
-        <Text style={{ color: resultColor(), fontWeight: "bold" }}>
+        <Text style={{ color: resultColor(result), fontWeight: "bold" }}>
           Glasgow: {result}
         </Text>
         <Text style={styles.subText}>Adicionado em: {createdAt}</Text>
         <Text style={styles.infoText}>Clique para ver mais detalhes</Text>
       </TouchableOpacity>
-      <IconButton icon={"trash-can-outline"} size={24} onPress={deletePatient}/>
+      <IconButton
+        icon={"trash-can-outline"}
+        size={24}
+        onPress={deletePatient}
+      />
     </View>
   );
 }
@@ -58,7 +62,7 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: "700",
     fontSize: 24,
-    textTransform:'capitalize'
+    textTransform: "capitalize",
   },
   subText: {
     fontWeight: "500",
@@ -71,3 +75,11 @@ const styles = StyleSheet.create({
     margin: 8,
   },
 });
+
+// função para definir uma cor para cada resultado
+export const resultColor = (result) => {
+  if (result >= 13 ) return "#4CAF50";
+  if (result >= 9 && result <= 12) return "#FFC107";
+  if (result >= 3 && result <= 8) return "#FF9800";
+  if (result < 3) return "#D32F2F";
+};

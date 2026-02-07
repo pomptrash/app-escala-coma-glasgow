@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import { resultColor } from "../../components/PatientCard";
 
 export function PatientDetails() {
   const route = useRoute();
@@ -14,7 +15,7 @@ export function PatientDetails() {
       </View>
 
       <View>
-        <Text style={styles.report}>Glasgow: {patient.resultado}</Text>
+        <Text style={[styles.report, {color: resultColor(patient.resultado)}]}>Glasgow: {patient.resultado}</Text>
         <View style={styles.subContent}>
           <Text style={styles.Text}>
             Abertura Ocular: {patient.indicadores.aberturaOcular}
@@ -61,6 +62,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   subContent: {
-    paddingLeft: 8,
+    padding: 8,
+    gap: 2
   },
 });
