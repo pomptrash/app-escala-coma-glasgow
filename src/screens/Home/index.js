@@ -1,15 +1,17 @@
-import { StyleSheet, Text, FlatList, Alert } from "react-native";
-import { FAB } from "react-native-paper";
+import { StyleSheet, Text, FlatList, Alert, View } from "react-native";
+import { FAB, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { PatientCard } from "../../components/PatientCard";
 
+import { useThemeContext } from "../../contexts/themeContext";
 // contexto dos pacientes salvos
 import { useCallback, useContext } from "react";
 import { PatientContext } from "../../contexts/patientContext";
 
 export default function Home() {
+  const { toggleTheme, darkMode } = useThemeContext();
   const navigation = useNavigation();
   // consumo do contexto
   const { patients, loading, deletePatient } = useContext(PatientContext);
@@ -46,6 +48,15 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* botão para alterar o tema */}
+      <View style={styles.toggleThemeBtn}>
+        {darkMode ? (
+          <IconButton icon={"weather-night"} onPress={toggleTheme} />
+        ) : (
+          <IconButton icon={"white-balance-sunny"} onPress={toggleTheme} />
+        )}
+      </View>
+
       <Text style={styles.title}>Lista de Pacientes ({patients.length})</Text>
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -78,6 +89,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f3f4f5",
     padding: 10,
+  },
+
+  toggleThemeBtn: {
+    position: "absolute",
+    right: 10,
+    top: 40,
   },
   title: {
     fontWeight: "bold",
