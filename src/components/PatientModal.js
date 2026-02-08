@@ -13,6 +13,7 @@ import {
   Portal,
   IconButton,
   TextInput,
+  useTheme,
 } from "react-native-paper";
 import { Controller, useForm } from "react-hook-form";
 import { useCallback, memo, useEffect } from "react";
@@ -30,6 +31,8 @@ export const PatientModal = memo(function PatientModal({
     reset,
     formState: { errors },
   } = useForm({ defaultValues: editingPatient });
+
+  const { colors } = useTheme();
 
   useEffect(() => {
     if (editingPatient) {
@@ -49,13 +52,16 @@ export const PatientModal = memo(function PatientModal({
         visible={modalVisible}
         onDismiss={hideModal}
         style={styles.modal}
-        contentContainerStyle={styles.modalContent}
+        contentContainerStyle={[
+          styles.modalContent,
+          { borderColor: colors.border, backgroundColor: colors.background },
+        ]}
       >
         {/* btn para fechar o modal */}
         <IconButton
           icon={"close-box"}
           size={30}
-          iconColor="#00468b"
+          iconColor={colors.button}
           onPress={hideModal}
           style={{
             position: "absolute",
@@ -92,7 +98,9 @@ export const PatientModal = memo(function PatientModal({
                 render={({ field: { onChange, value } }) => (
                   <View>
                     {errors.patientName && (
-                      <Text style={styles.errorMessage}>
+                      <Text
+                        style={[styles.errorMessage, { color: colors.danger }]}
+                      >
                         {errors.patientName.message}
                       </Text>
                     )}
@@ -126,7 +134,9 @@ export const PatientModal = memo(function PatientModal({
                 render={({ field: { onChange, value } }) => (
                   <View>
                     {errors.patientAge && (
-                      <Text style={styles.errorMessage}>
+                      <Text
+                        style={[styles.errorMessage, { color: colors.danger }]}
+                      >
                         {errors.patientAge.message}
                       </Text>
                     )}
@@ -171,11 +181,14 @@ export const PatientModal = memo(function PatientModal({
               <Button
                 mode="contained"
                 onPress={handleSubmit(handleSave)}
-                textColor="#00468b"
-                buttonColor="lightblue"
-                rippleColor={"lightcyan"}
+                textColor={colors.textPrimary}
+                buttonColor={colors.button}
                 labelStyle={{ fontWeight: "bold" }}
-                style={{ borderWidth: 1, borderColor: "#00468b" }}
+                style={{
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  padding: 8,
+                }}
               >
                 Salvar Dados
               </Button>
@@ -192,16 +205,13 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   modalContent: {
-    backgroundColor: "#f4f5f6",
     borderWidth: 1,
-    borderColor: "black",
     padding: 30,
     paddingVertical: 50,
     borderRadius: 16,
   },
   errorMessage: {
     fontSize: 12,
-    color: "#c00",
     fontWeight: "bold",
     textTransform: "uppercase",
     padding: 5,

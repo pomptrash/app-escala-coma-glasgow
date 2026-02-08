@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { resultColor } from "../../components/PatientCard";
-import { FAB } from "react-native-paper";
+import { FAB, useTheme } from "react-native-paper";
 import { useState, useCallback, useContext } from "react";
 import { PatientModal } from "../../components/PatientModal";
 
@@ -10,6 +10,8 @@ import { PatientContext } from "../../contexts/patientContext";
 export function PatientDetails() {
   const route = useRoute();
   const { patient } = route.params;
+
+  const { colors } = useTheme();
 
   const { updatePatientData, patients } = useContext(PatientContext);
 
@@ -31,7 +33,12 @@ export function PatientDetails() {
   );
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={[
+        styles.container,
+        { backgroundColor: colors.background },
+      ]}
+    >
       <PatientModal
         modalVisible={modalVisible}
         hideModal={hideModal}
@@ -39,20 +46,32 @@ export function PatientDetails() {
         editingPatient={currentPatient}
       />
 
-      <Text style={styles.text}>Informações</Text>
+      <Text style={[styles.text, { color: colors.textPrimary }]}>
+        Informações
+      </Text>
 
-      <View style={styles.patientInfoContainer}>
-        <Text style={styles.text}>
+      <View
+        style={[styles.patientInfoContainer, { borderColor: colors.border }]}
+      >
+        <Text style={[styles.text, { color: colors.textPrimary }]}>
           Nome:{" "}
           <Text style={styles.patientName}>{currentPatient.patientName}</Text>
         </Text>
       </View>
-      <View style={styles.patientInfoContainer}>
-        <Text style={styles.text}>Idade: {currentPatient.patientAge} anos</Text>
+      <View
+        style={[styles.patientInfoContainer, { borderColor: colors.border }]}
+      >
+        <Text style={[styles.text, { color: colors.textPrimary }]}>
+          Idade: {currentPatient.patientAge} anos
+        </Text>
       </View>
 
-      <Text style={styles.text}>Quadro Clínico</Text>
-      <View style={styles.patientInfoContainer}>
+      <Text style={[styles.text, { color: colors.textPrimary }]}>
+        Quadro Clínico
+      </Text>
+      <View
+        style={[styles.patientInfoContainer, { borderColor: colors.border }]}
+      >
         <Text
           style={[
             styles.report,
@@ -62,27 +81,35 @@ export function PatientDetails() {
           Glasgow: {currentPatient.resultado}
         </Text>
         <View style={styles.subContent}>
-          <Text style={styles.text}>
+          <Text style={[styles.text, { color: colors.textPrimary }]}>
             Abertura Ocular: {currentPatient.indicadores.aberturaOcular}
           </Text>
-          <Text style={styles.text}>
+          <Text style={[styles.text, { color: colors.textPrimary }]}>
             Resposta Verbal: {currentPatient.indicadores.respostaVerbal}
           </Text>
-          <Text style={styles.text}>
+          <Text style={[styles.text, { color: colors.textPrimary }]}>
             Resposta Motora: {currentPatient.indicadores.respostaMotora}
           </Text>
-          <Text style={styles.text}>
+          <Text style={[styles.text, { color: colors.textPrimary }]}>
             Reatividade Pupilar: {currentPatient.indicadores.reatividadePupilar}
           </Text>
         </View>
 
         <View>
-          <Text style={styles.report}>Observação:</Text>
+          <Text style={[styles.report, { color: colors.textPrimary }]}>
+            Observação:
+          </Text>
           <View style={styles.subContent}>
             <Text
               style={[
                 styles.text,
-                { padding: 16, borderRadius: 8, backgroundColor: "#f3f4f5" },
+                {
+                  padding: 16,
+                  borderRadius: 8,
+                  color: colors.textPrimary,
+                  backgroundColor: colors.card,
+                  textTransform: "capitalize",
+                },
               ]}
             >
               {currentPatient.patientReport}
@@ -91,11 +118,16 @@ export function PatientDetails() {
         </View>
       </View>
 
-      <Text style={[styles.text, { fontWeight: "400", marginTop: 16 }]}>
+      <Text
+        style={[
+          styles.text,
+          { fontWeight: "400", marginTop: 16, color: colors.textPrimary },
+        ]}
+      >
         Adicionado em {currentPatient.createdAt}
       </Text>
       <FAB
-        style={styles.fab}
+        style={[styles.fab, { backgroundColor: colors.button }]}
         icon={"pencil"}
         label="Editar"
         onPress={showModal}
@@ -107,20 +139,19 @@ export function PatientDetails() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "#fff",
     padding: 20,
     gap: 8,
   },
   patientInfoContainer: {
     borderWidth: 1,
-    borderColor: "#000",
+    // borderColor: "#000",
     borderRadius: 16,
     padding: 16,
   },
 
   patientName: {
     fontSize: 24,
-    textTransform: "capitalize"
+    textTransform: "capitalize",
   },
   report: {
     fontSize: 16,
@@ -138,7 +169,6 @@ const styles = StyleSheet.create({
     bottom: 24,
     right: 24,
     marginBottom: 16,
-    backgroundColor: "lightblue",
     fontSize: 24,
   },
 });

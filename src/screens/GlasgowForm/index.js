@@ -7,12 +7,13 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { RadioButton, Button } from "react-native-paper";
+import { RadioButton, Button, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
 
 export function GlasgowForm() {
   const navigation = useNavigation();
+  const { colors } = useTheme();
 
   // hook do react hook form
   const {
@@ -46,10 +47,16 @@ export function GlasgowForm() {
   }, []);
 
   // função para navegar até a tela de resultado
-  const onSubmit = useCallback((data) => {
-    const resultado = calculateGlasgow(data);
-    navigation.navigate("GlasgowFormResult", { resultado, indicadores: data });
-  }, [navigation, calculateGlasgow]);
+  const onSubmit = useCallback(
+    (data) => {
+      const resultado = calculateGlasgow(data);
+      navigation.navigate("GlasgowFormResult", {
+        resultado,
+        indicadores: data,
+      });
+    },
+    [navigation, calculateGlasgow],
+  );
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -57,7 +64,6 @@ export function GlasgowForm() {
     >
       <ScrollView
         contentContainerStyle={{
-          backgroundColor: "lightblue",
           padding: 20,
           gap: 16,
           paddingBottom: 40,
@@ -69,7 +75,7 @@ export function GlasgowForm() {
           control={control}
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
-            <View style={styles.inputContainer}>
+            <View style={[styles.inputContainer, {borderColor: colors.border}]}>
               {/* mensagem de erro caso o input não seja preenchido */}
               {errors.aberturaOcular && (
                 <Text style={styles.errorMessage}>
@@ -77,7 +83,11 @@ export function GlasgowForm() {
                 </Text>
               )}
               <View>
-                <Text style={styles.inputLabel}>Abertura Ocular</Text>
+                <Text
+                  style={[styles.inputLabel, { color: colors.textPrimary }]}
+                >
+                  Abertura Ocular
+                </Text>
               </View>
               <RadioButton.Group
                 onValueChange={(newValue) => onChange(newValue)}
@@ -114,7 +124,7 @@ export function GlasgowForm() {
           control={control}
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
-            <View style={styles.inputContainer}>
+            <View style={[styles.inputContainer, {borderColor: colors.border}]}>
               {/* mensagem de erro caso o input não seja preenchido */}
               {errors.respostaVerbal && (
                 <Text style={styles.errorMessage}>
@@ -123,7 +133,11 @@ export function GlasgowForm() {
               )}
 
               <View>
-                <Text style={styles.inputLabel}>Resposta Verbal</Text>
+                <Text
+                  style={[styles.inputLabel, { color: colors.textPrimary }]}
+                >
+                  Resposta Verbal
+                </Text>
               </View>
               <RadioButton.Group
                 onValueChange={(newValue) => onChange(newValue)}
@@ -165,7 +179,7 @@ export function GlasgowForm() {
           control={control}
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
-            <View style={styles.inputContainer}>
+            <View style={[styles.inputContainer, {borderColor: colors.border}]}>
               {/* mensagem de erro caso o input não seja preenchido */}
               {errors.respostaMotora && (
                 <Text style={styles.errorMessage}>
@@ -173,7 +187,11 @@ export function GlasgowForm() {
                 </Text>
               )}
               <View>
-                <Text style={styles.inputLabel}>Resposta Motora</Text>
+                <Text
+                  style={[styles.inputLabel, { color: colors.textPrimary }]}
+                >
+                  Resposta Motora
+                </Text>
               </View>
               <RadioButton.Group
                 onValueChange={(newValue) => onChange(newValue)}
@@ -221,7 +239,7 @@ export function GlasgowForm() {
           control={control}
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
-            <View style={styles.inputContainer}>
+            <View style={[styles.inputContainer, {borderColor: colors.border}]}>
               {/* mensagem de erro caso o input não seja preenchido */}
               {errors.reatividadePupilar && (
                 <Text style={styles.errorMessage}>
@@ -229,7 +247,11 @@ export function GlasgowForm() {
                 </Text>
               )}
               <View>
-                <Text style={styles.inputLabel}>Reatividade Pupilar</Text>
+                <Text
+                  style={[styles.inputLabel, { color: colors.textPrimary }]}
+                >
+                  Reatividade Pupilar
+                </Text>
               </View>
               <RadioButton.Group
                 onValueChange={(newValue) => onChange(newValue)}
@@ -259,6 +281,7 @@ export function GlasgowForm() {
         <Button
           onPress={handleSubmit(onSubmit)}
           mode="contained"
+          textColor={colors.textPrimary}
           style={{ padding: 8 }}
         >
           Calcular
@@ -276,7 +299,6 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     borderWidth: 1,
-    borderColor: "#000",
     padding: 10,
     borderRadius: 16,
   },
@@ -288,7 +310,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -15,
     right: 30,
-    backgroundColor: "lightblue",
     padding: 5,
   },
   radioItem: {

@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity, StyleSheet, View } from "react-native";
-import { IconButton } from "react-native-paper";
+import { IconButton, useTheme } from "react-native-paper";
 import { memo } from "react";
 
 export const PatientCard = memo(function PatientCard({
@@ -18,31 +18,52 @@ export const PatientCard = memo(function PatientCard({
   //   "resultado": 6
   // }
 
+  const { colors } = useTheme();
+
   return (
     <View
       style={[
         styles.container,
-        { borderLeftColor: resultColor(patient.resultado) },
+        {
+          borderLeftColor: resultColor(patient.resultado),
+          backgroundColor: colors.card,
+          shadowColor: colors.textPrimary,
+        },
       ]}
     >
       <TouchableOpacity
         style={styles.content}
         onPress={() => navigate(patient)}
       >
-        <Text style={styles.text} numberOfLines={2}>
+        <Text
+          style={[styles.text, { color: colors.textPrimary }]}
+          numberOfLines={2}
+        >
           {patient.patientName}
         </Text>
-        <Text style={styles.subText}>{patient.patientAge} anos</Text>
+        <Text style={[styles.subText, { color: colors.textPrimary }]}>
+          {patient.patientAge} anos
+        </Text>
         <Text
           style={{ color: resultColor(patient.resultado), fontWeight: "bold" }}
         >
           Glasgow: {patient.resultado}
         </Text>
-        <Text style={styles.subText}>Adicionado em: {patient.createdAt}</Text>
-        <Text style={styles.infoText}>Clique para ver mais detalhes</Text>
+        <Text
+          style={[
+            styles.subText,
+            { color: colors.textSecondary, fontSize: 12 },
+          ]}
+        >
+          Adicionado em: {patient.createdAt}
+        </Text>
+        <Text style={[styles.infoText, { color: colors.textSecondary }]}>
+          Clique para ver mais detalhes
+        </Text>
       </TouchableOpacity>
       <IconButton
         icon={"trash-can-outline"}
+        iconColor={colors.danger}
         size={24}
         onPress={() => deletePatient(patient.id, patient.patientName)}
       />
@@ -56,10 +77,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 8,
     minWidth: "90%",
-    backgroundColor: "#fff",
     flexDirection: "row",
     elevation: 2,
-    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,

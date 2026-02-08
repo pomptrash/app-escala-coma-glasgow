@@ -1,5 +1,5 @@
 import { StyleSheet, Text, FlatList, Alert, View } from "react-native";
-import { FAB, IconButton } from "react-native-paper";
+import { FAB, IconButton, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -16,6 +16,8 @@ export default function Home() {
   // consumo do contexto
   const { patients, loading, deletePatient } = useContext(PatientContext);
 
+  const { colors } = useTheme();
+
   const handleNavigateToDetails = useCallback(
     (patient) => {
       navigation.navigate("PatientDetails", { patient });
@@ -24,7 +26,7 @@ export default function Home() {
   );
 
   const handleDeletePatient = useCallback(
-    (id, name) => {
+    (id) => {
       Alert.alert(
         "Confirmação", // título
         "Tem certeza que deseja excluir o paciente?", // mensagem
@@ -51,13 +53,23 @@ export default function Home() {
       {/* botão para alterar o tema */}
       <View style={styles.toggleThemeBtn}>
         {darkMode ? (
-          <IconButton icon={"weather-night"} onPress={toggleTheme} />
+          <IconButton
+            icon={"weather-night"}
+            onPress={toggleTheme}
+            iconColor={colors.textPrimary}
+          />
         ) : (
-          <IconButton icon={"white-balance-sunny"} onPress={toggleTheme} />
+          <IconButton
+            icon={"white-balance-sunny"}
+            onPress={toggleTheme}
+            iconColor={colors.textPrimary}
+          />
         )}
       </View>
 
-      <Text style={styles.title}>Lista de Pacientes ({patients.length})</Text>
+      <Text style={[styles.title, { color: colors.textPrimary }]}>
+        Lista de Pacientes ({patients.length})
+      </Text>
       <FlatList
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ gap: 8 }}
@@ -73,13 +85,11 @@ export default function Home() {
       />
 
       <FAB
-        style={styles.fab}
+        style={[styles.fab, { backgroundColor: colors.button }]}
         icon={"plus"}
         label="Adicionar"
         onPress={() => navigation.navigate("GlasgowForm")}
-      >
-        <Text>Adicionar</Text>
-      </FAB>
+      />
     </SafeAreaView>
   );
 }
@@ -87,7 +97,6 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f3f4f5",
     padding: 10,
   },
 
@@ -108,7 +117,6 @@ const styles = StyleSheet.create({
     bottom: 24,
     right: 24,
     marginBottom: 16,
-    backgroundColor: "lightblue",
     fontSize: 24,
   },
 });

@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
-import { Button } from "react-native-paper";
+import { Button, useTheme } from "react-native-paper";
 import { useCallback, useState, useContext, memo } from "react";
 
 // contexto dos pacientes salvos
@@ -17,6 +17,9 @@ export function GlasgowFormResult() {
   const showModal = useCallback(() => setModalVisible(true), []);
   const hideModal = useCallback(() => setModalVisible(false), []);
 
+  // theme context
+  const { colors } = useTheme();
+
   // navigation params
   const navigation = useNavigation();
   const route = useRoute();
@@ -31,10 +34,20 @@ export function GlasgowFormResult() {
   }) {
     return (
       <View style={[styles.container, { borderWidth: 1, borderColor: color }]}>
-        <Text style={{ fontSize: 16, fontWeight: "bold" }}>Resultado:</Text>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "bold",
+            color: colors.textPrimary,
+          }}
+        >
+          Resultado:
+        </Text>
         <Text style={[styles.resultado, { color: color }]}>{resultado}</Text>
         <Text style={[styles.gravidade, { color: color }]}>{gravidade}</Text>
-        <Text style={styles.mensagem}>{mensagem}</Text>
+        <Text style={[styles.mensagem, { color: colors.textPrimary }]}>
+          {mensagem}
+        </Text>
       </View>
     );
   });
@@ -63,7 +76,7 @@ export function GlasgowFormResult() {
     <ScrollView
       contentContainerStyle={{
         flexGrow: 1,
-        backgroundColor: "#f3f4f5",
+        backgroundColor: colors.background,
         padding: 20,
         paddingBottom: 40,
         gap: 16,
@@ -137,22 +150,16 @@ export function GlasgowFormResult() {
         <Button
           mode="contained"
           onPress={() => navigation.goBack()}
-          textColor="#00468b"
-          buttonColor="lightblue"
-          rippleColor={"lightcyan"}
-          labelStyle={{ fontWeight: "bold" }}
-          style={{ borderWidth: 1, borderColor: "#00468b" }}
+          buttonColor={colors.button}
+          labelStyle={{ fontWeight: "bold", color: colors.textPrimary }}
         >
           Novo Cálculo
         </Button>
         <Button
           mode="contained"
           onPress={showModal}
-          textColor="#00468b"
-          buttonColor="lightblue"
-          rippleColor={"lightcyan"}
-          labelStyle={{ fontWeight: "bold" }}
-          style={{ borderWidth: 1, borderColor: "#00468b" }}
+          buttonColor={colors.button}
+          labelStyle={{ fontWeight: "bold", color: colors.textPrimary }}
         >
           Salvar Dados
         </Button>
@@ -166,7 +173,6 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 8,
     gap: 8,
-    backgroundColor: "#fff",
   },
   resultado: {
     fontSize: 40,

@@ -21,7 +21,7 @@ export function StackRouter() {
           headerShown: true,
           headerTitle: "Calcular Escala De Glasgow",
           headerTitleAlign: "center",
-          headerStyle: { backgroundColor: "lightblue" },
+          // headerStyle: { backgroundColor: "lightblue" },
         }}
       />
       <StackNavigator.Screen
