@@ -27,7 +27,7 @@ export function PatientDetails() {
         hideModal();
       }
     },
-    [currentPatient.id, updatePatientData, hideModal],
+    [patient.id, updatePatientData, hideModal],
   );
 
   return (

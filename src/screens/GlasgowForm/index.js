@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { RadioButton, Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { useCallback } from "react";
 
 export function GlasgowForm() {
   const navigation = useNavigation();
@@ -28,7 +29,7 @@ export function GlasgowForm() {
   });
 
   // função para calcular o resultado da escala de glasgow
-  const calculateGlasgow = (data) => {
+  const calculateGlasgow = useCallback((data) => {
     const {
       aberturaOcular,
       respostaMotora,
@@ -42,13 +43,13 @@ export function GlasgowForm() {
       +aberturaOcular + +respostaMotora + +respostaVerbal + +reatividadePupilar;
 
     return resultado;
-  };
+  }, []);
 
   // função para navegar até a tela de resultado
-  const onSubmit = (data) => {
+  const onSubmit = useCallback((data) => {
     const resultado = calculateGlasgow(data);
     navigation.navigate("GlasgowFormResult", { resultado, indicadores: data });
-  };
+  }, [navigation, calculateGlasgow]);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}

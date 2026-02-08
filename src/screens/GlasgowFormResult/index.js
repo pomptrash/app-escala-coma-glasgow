@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { Button } from "react-native-paper";
-import { useCallback, useState, useContext } from "react";
+import { useCallback, useState, useContext, memo } from "react";
 
 // contexto dos pacientes salvos
 import { PatientContext } from "../../contexts/patientContext";
@@ -23,7 +23,12 @@ export function GlasgowFormResult() {
   const { resultado, indicadores } = route.params;
 
   // conditional result component
-  function ResultCard({ resultado, gravidade, mensagem, color }) {
+  const ResultCard = memo(function ResultCard({
+    resultado,
+    gravidade,
+    mensagem,
+    color,
+  }) {
     return (
       <View style={[styles.container, { borderWidth: 1, borderColor: color }]}>
         <Text style={{ fontSize: 16, fontWeight: "bold" }}>Resultado:</Text>
@@ -32,7 +37,7 @@ export function GlasgowFormResult() {
         <Text style={styles.mensagem}>{mensagem}</Text>
       </View>
     );
-  }
+  });
 
   // função para persistir os dados inseridos pelo usuário
   const handleCreatePatient = useCallback(

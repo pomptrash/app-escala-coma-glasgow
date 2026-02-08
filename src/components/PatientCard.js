@@ -1,11 +1,9 @@
 import { Text, TouchableOpacity, StyleSheet, View } from "react-native";
 import { IconButton } from "react-native-paper";
+import { memo } from "react";
 
-export function PatientCard({
-  patientName,
-  patientAge,
-  createdAt,
-  result,
+export const PatientCard = memo(function PatientCard({
+  patient,
   deletePatient,
   navigate,
 }) {
@@ -21,26 +19,36 @@ export function PatientCard({
   // }
 
   return (
-    <View style={[styles.container, { borderLeftColor: resultColor(result) }]}>
-      <TouchableOpacity style={styles.content} onPress={navigate}>
+    <View
+      style={[
+        styles.container,
+        { borderLeftColor: resultColor(patient.resultado) },
+      ]}
+    >
+      <TouchableOpacity
+        style={styles.content}
+        onPress={() => navigate(patient)}
+      >
         <Text style={styles.text} numberOfLines={2}>
-          {patientName}
+          {patient.patientName}
         </Text>
-        <Text style={styles.subText}>{patientAge} anos</Text>
-        <Text style={{ color: resultColor(result), fontWeight: "bold" }}>
-          Glasgow: {result}
+        <Text style={styles.subText}>{patient.patientAge} anos</Text>
+        <Text
+          style={{ color: resultColor(patient.resultado), fontWeight: "bold" }}
+        >
+          Glasgow: {patient.resultado}
         </Text>
-        <Text style={styles.subText}>Adicionado em: {createdAt}</Text>
+        <Text style={styles.subText}>Adicionado em: {patient.createdAt}</Text>
         <Text style={styles.infoText}>Clique para ver mais detalhes</Text>
       </TouchableOpacity>
       <IconButton
         icon={"trash-can-outline"}
         size={24}
-        onPress={deletePatient}
+        onPress={() => deletePatient(patient.id, patient.patientName)}
       />
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -78,7 +86,7 @@ const styles = StyleSheet.create({
 
 // função para definir uma cor para cada resultado
 export const resultColor = (result) => {
-  if (result >= 13 ) return "#4CAF50";
+  if (result >= 13) return "#4CAF50";
   if (result >= 9 && result <= 12) return "#FFC107";
   if (result >= 3 && result <= 8) return "#FF9800";
   if (result < 3) return "#D32F2F";
