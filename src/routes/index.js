@@ -1,9 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { StackRouter } from "./stack.router";
 
-export function Router() {
+export function Router({ theme }) {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={theme}>
       <StackRouter />
     </NavigationContainer>
   );
