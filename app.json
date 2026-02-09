@@ -1,8 +1,10 @@
 {
   "expo": {
-    "name": "escala-glasgow",
+    "name": "Escala de Glasgow",
     "slug": "escala-glasgow",
     "version": "1.0.0",
+    "description": "App para avaliação neurológica rápida via Escala de Coma de Glasgow.",
+    "githubUrl": "https://github.com/pomptrash/app-escala-coma-glasgow",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -10,7 +12,7 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0B1D2F"
     },
     "ios": {
       "supportsTablet": true
@@ -18,12 +20,18 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#0B1D2F"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.pomptrash.escalaglasgow"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d2bc7315-1429-4c4e-ab56-ae8e27830e3b"
+      }
     }
   }
 }
