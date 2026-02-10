@@ -71,11 +71,11 @@ Este aplicativo mobile foi desenvolvido para auxiliar profissionais de saúde na
 ## 📸 Screenshots
 
 <p align="center">
-    <img src="./assets/screenshots/1. home .jpg" width="30%" alt="Tela Inicial" />
-    <img src="./assets/screenshots/2. glasgow form.jpg" width="30%" alt="Formulário" />
-    <img src="./assets/screenshots/2.1 glasgow form.jpg" width="30%" alt="Formulário" />
-    <img src="./assets/screenshots/3. glasgow form result.jpg" width="30%" alt="Resultado do Cálculo" />
-    <img src="./assets/screenshots/3.1 glasgow form result.jpg" width="30%" alt="Resultado do Cálculo" />
-    <img src="./assets/screenshots/4. patient details.jpg" width="30%" alt="Detalhes do paciente" />
-    <img src="./assets/screenshots/5. add or edit patient modal.jpg" width="30%" alt="Modal de criação/edição do paciente" />
+    <img src="./assets/screenshots/1.home.jpg" width="30%" alt="Tela Inicial" />
+    <img src="./assets/screenshots/2.glasgow-form.jpg" width="30%" alt="Formulário" />
+    <img src="./assets/screenshots/2.1.glasgow-form.jpg" width="30%" alt="Formulário" />
+    <img src="./assets/screenshots/3.glasgow-form-result.jpg" width="30%" alt="Resultado do Cálculo" />
+    <img src="./assets/screenshots/3.1.glasgow-form-result.jpg" width="30%" alt="Resultado do Cálculo" />
+    <img src="./assets/screenshots/4.patient-details.jpg" width="30%" alt="Detalhes do paciente" />
+    <img src="./assets/screenshots/5.add-or-edit-patient-modal.jpg" width="30%" alt="Modal de criação/edição do paciente" />
 </p>
